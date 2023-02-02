@@ -17,6 +17,8 @@ public class JPAMain {
 //            Member findMember = em.find(Member.class, 1L);
             // 대상이 table이 아닌 객체임
             List<Member> result = em.createQuery("select m from Member as m", Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(8) //paging
                     .getResultList();
 
             for(Member member: result){
