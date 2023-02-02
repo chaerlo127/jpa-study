@@ -14,8 +14,9 @@ public class JPAMain {
         tx.begin();
         try{
             Member findMember = em.find(Member.class, 1L);
-            em.remove(findMember);
-
+            // 저장하지 않고, 그대로 둬도 가능
+            // java collection 다루는 것곽 같음
+            findMember.setName("HelloJPA");
             tx.commit();
         }catch (Exception e){
             tx.rollback();
