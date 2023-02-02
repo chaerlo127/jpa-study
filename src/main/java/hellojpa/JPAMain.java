@@ -9,19 +9,22 @@ public class JPAMain {
     public static void main(String[] args){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");// meta-inf에서 작성한 unit name을 넎어준다.
         EntityManager em = emf.createEntityManager();
-        // database에 접근할 code를 여기서 작성
+
         EntityTransaction tx = em.getTransaction(); // 트랜잭션
         tx.begin();
+        try{
+            Member member = new Member();
+            member.setId(1L);
+            member.setName("HelloA");
+            em.persist(member);
 
-        Member member = new Member();
-        member.setId(1L);
-        member.setName("HelloA");
-        em.persist(member);
+            tx.commit();
+        }catch (Exception e){
+            tx.rollback();
+        }finally {
+            em.close();
+        }
 
-        tx.commit();
-        // 여기까지
-
-        em.close();
         emf.close();
     }
 }
