@@ -14,16 +14,14 @@ public class JPAMain {
         EntityTransaction tx = em.getTransaction(); // 트랜잭션
         tx.begin();
         try{
-//            Member findMember = em.find(Member.class, 1L);
-            // 대상이 table이 아닌 객체임
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(8) //paging
-                    .getResultList();
+            // 비영속 상태
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
 
-            for(Member member: result){
-                System.out.println("member.name = " + member.getName());
-            }
+            // 영속 상태 -> 현재 DB에 저장이 되지는 않음
+            em.persist(member);
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
