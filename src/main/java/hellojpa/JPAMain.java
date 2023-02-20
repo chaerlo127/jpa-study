@@ -14,13 +14,7 @@ public class JPAMain {
         EntityTransaction tx = em.getTransaction(); // 트랜잭션
         tx.begin();
         try{
-            // 비영속 상태
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("HelloJPA");
 
-            // 영속 상태 -> 현재 DB에 저장이 되지는 않음
-            em.persist(member);
 
             tx.commit();
         }catch (Exception e){

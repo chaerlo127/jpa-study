@@ -6,27 +6,57 @@ import java.util.Date;
 
 @Entity
 public class Member {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "name")
-    private String username;
+    private String name;
 
-    private Integer age;
+    private String city;
 
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    private String street;
 
-    // 생성 일자
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private String zipcode;
 
-    // 수정 일자
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
 
-    @Lob // varchar를 넘어서는 큰 값을 작성하고자할 때 사용하는 것
-    private String description;
+    public Long getId() {
+        return id;
+    }
 
-    public Member(){}
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
 }
