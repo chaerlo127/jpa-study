@@ -14,21 +14,28 @@ public class JPAMain {
         EntityTransaction tx = em.getTransaction(); // 트랜잭션
         tx.begin();
         try{
+
+            // 저장
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team); // persist를 통해 pk 값이 생성됨
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeamId(team.getId());
+            member.setTeam(team);
 
             em.persist(member);
 
-            Member findMember = em.find(Member.class, member.getTeamId());
-            Long findTeamId = findMember.getTeamId();
-            Team findTeam = em.find(Team.class, findTeamId);
+            // 영속성 컨텍스트: 1차 캐시에 다 저장이 되어 있기 때문에 따로 sql을 날리지 않음.
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = em.find(Team.class, findMember.getTeam().getName());
+
+            // Team 을 바꾸고 싶다면?
+            Team newTeam = em.find(Team.class, 100L);
+            findMember.setTeam(newTeam);
 
             tx.commit();
+
         }catch (Exception e){
             tx.rollback();
         }finally {
