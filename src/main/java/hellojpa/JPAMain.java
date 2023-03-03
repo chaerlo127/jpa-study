@@ -14,7 +14,19 @@ public class JPAMain {
         EntityTransaction tx = em.getTransaction(); // 트랜잭션
         tx.begin();
         try{
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team); // persist를 통해 pk 값이 생성됨
 
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeamId(team.getId());
+
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getTeamId());
+            Long findTeamId = findMember.getTeamId();
+            Team findTeam = em.find(Team.class, findTeamId);
 
             tx.commit();
         }catch (Exception e){
