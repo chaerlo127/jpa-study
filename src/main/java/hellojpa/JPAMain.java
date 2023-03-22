@@ -26,13 +26,16 @@ public class JPAMain {
 
             em.persist(member);
 
+            em.flush(); // commit 전에 저장하고 싶은 경우
+            em.clear(); // 영속성 컨텍스트 완전히 초기화
+
             // 영속성 컨텍스트: 1차 캐시에 다 저장이 되어 있기 때문에 따로 sql을 날리지 않음.
             Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = em.find(Team.class, findMember.getTeam().getName());
+            List<Member> members = findMember.getTeam().getMembers();
 
-            // Team 을 바꾸고 싶다면?
-            Team newTeam = em.find(Team.class, 100L);
-            findMember.setTeam(newTeam);
+            for(Member member1: members){
+                System.out.println("m = " + member.getUsername());
+            }
 
             tx.commit();
 
